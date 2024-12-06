@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Menu</title>
+</head>
+<body>
+  <h1>Welcome to the Dashboard!</h1>
+  <script>
+    // Fetch data from the protected route
+    async function fetchDashboard() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('You are not authorized!');
+        window.location.href = '/login';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/auth/dashboard', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert(data.message);
+        } else {
+          alert(data.error);
+        }
+      } catch (error) {
+        console.error('Error fetching dashboard:', error);
+      }
+    }
+
+    fetchDashboard();
+  </script>
+</body>
+</html>

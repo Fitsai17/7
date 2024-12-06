@@ -1,0 +1,19 @@
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  image: node:20
+  script:
+    - npm install
+    - npm test
+
+deploy:
+  stage: deploy
+  image: node:20
+  script:
+    - npm install
+    - npm run build
+  only:
+    - main
